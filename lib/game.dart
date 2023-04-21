@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // set counts of egg planted
       eggCount = eggsOn.length;
 
-      if (eggsOn.length == 100) {
+      if (eggsOn.length == 15) {
         print('Malara won');
         malaraWon();
       } else if (step == index) {
