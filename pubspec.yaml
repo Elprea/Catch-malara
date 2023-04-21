@@ -62,7 +62,9 @@ flutter:
   assets:
     - images/malara-dead.png
     - images/mosquito-flying-box.gif
-    - images/yellow-bg.png
+    - images/egg.png
+    - images/egg_transparent_bg.png
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 import 'objects/egg.dart';
 import 'objects/tiles.dart';
 
 // Realtime
 DateTime now = DateTime.now();
-
-// Generate random values for Malara
-Random rand = new Random();
 
 List<int> eggsOn = []; // egg locations (can be used right away)
 
@@ -24,10 +20,10 @@ List possibleMoves = [
   currSpot + x + 1,
 ];
 
-int x = 8, y = 11; // easy = 5x7  hard = 10x14
+int x = 7, y = 7; // easy = 5x7  medium = 8x11 hard = 10x14
 int numSquares = x * y; // x * y
 int currSpot = (numSquares / 2).floor();
-int taps = 0;
+int taps = 0, eggCount = 0;
 bool caught = false;
 
 class MyHomePage extends StatefulWidget {
@@ -51,7 +47,19 @@ class _MyHomePageState extends State<MyHomePage> {
       () {
         caught = false;
         taps = 0;
+        eggCount = 0;
         currSpot = (numSquares / 2).floor();
+        eggsOn.clear();
+        possibleMoves = [
+          currSpot - 1,
+          currSpot + 1,
+          currSpot - x - 1,
+          currSpot - x,
+          currSpot - x + 1,
+          currSpot + x - 1,
+          currSpot + x,
+          currSpot + x + 1,
+        ];
       },
     );
   }
@@ -59,11 +67,34 @@ class _MyHomePageState extends State<MyHomePage> {
   void setMalaraSpot(int index) {
     setState(() {
       step = (possibleMoves..shuffle()).first;
-      if (step == index) {
+      if (step != currSpot) {
+        eggsOn.add(currSpot);
+      } else if (possibleMoves.length <= 1) {
+        step = currSpot;
+      }
+      if (eggsOn.contains(step) && step != currSpot)
+        while (eggsOn.contains(step)) {
+          if (possibleMoves.length <= 1) {
+            print('trapped');
+            break;
+          }
+          possibleMoves.remove(step);
+
+          step = (possibleMoves..shuffle()).first;
+        }
+
+      // set counts of egg planted
+      eggCount = eggsOn.length;
+
+      if (eggsOn.length == 100) {
+        print('Malara won');
+        malaraWon();
+      } else if (step == index) {
         print('caught');
         caught = true;
         malaraCaught();
       } else {
+        print('missed');
         currSpot = step;
         possibleMoves.clear();
       }
@@ -172,6 +203,31 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  void malaraWon() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: Colors.grey[700],
+              title: Center(
+                child: Text(
+                  'Malara won! She succesfully planted her eggs and spread out her colony. \n\nHow come you reached $taps without catching her? Noob.\n\nWell, Better luck next time.',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              actions: [
+                MaterialButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    restartGame();
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.refresh),
+                )
+              ]);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('0', style: TextStyle(fontSize: 40)),
+                    Text('$eggCount', style: TextStyle(fontSize: 40)),
                     Text('E G G'),
                   ],
                 )
@@ -224,9 +280,11 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 if (eggsOn.contains(index)) {
                   return Egg(
+                    child: index,
                     function: () {
                       // malara plants her eggs
-                      setState(() {});
+                      // MOVE EVERYTHING HERE INSIDE Tiles
+                      setMove(currSpot);
                     },
                   );
                 } else {
