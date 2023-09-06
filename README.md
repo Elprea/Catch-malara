@@ -14,7 +14,7 @@ A bug named malara went loose and has to be catched at all cost before she sprea
 - Player loses if the bug successfully placed its 15 eggs.
 
 
-## How to Run:
+# How to Run:
 
 1. Make sure to have a .dart VM ready e.g Visual Code Studio, etc.
 
@@ -26,7 +26,7 @@ A bug named malara went loose and has to be catched at all cost before she sprea
    
 4. Run main.dart in any type of device emulator
 
-# Screenshots
+## Screenshots
 
 #### Main interface
 ![main](https://github.com/Elprea/Catch-malara/assets/116543105/ee56403a-8494-404e-a376-7cba66aaa0bc)
