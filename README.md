@@ -5,7 +5,7 @@ A bug named malara went loose and has to be catched at all cost before she sprea
 ### This is Malara and she's not nice!
 ![mosquito-flying-box](https://github.com/Elprea/Catch-malara/assets/116543105/a1532fd7-8625-463e-9294-a9619e03e23f)
 
-#### Gameplay
+### Gameplay
 - The player has to make a guess out of 9 possible next location that the bug will go to.
 - The 9 possible location of the bug is basically the tiles beside it.
 - The player's guess is from where the player tapped inside the gaming area.
@@ -14,7 +14,7 @@ A bug named malara went loose and has to be catched at all cost before she sprea
 - Player loses if the bug successfully placed its 15 eggs.
 
 
-# How to Run:
+## How to Run:
 
 1. Make sure to have a .dart VM ready e.g Visual Code Studio, etc.
 
